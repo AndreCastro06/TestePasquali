@@ -1,0 +1,55 @@
+<div class="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6 gap-6">
+  <h1 class="text-4xl font-bold"># Jogo da Velha #</h1>
+
+  <!-- Placar -->
+  <div class="flex justify-around w-full max-w-sm text-center text-lg font-semibold">
+    <div> X Player 1 X: {{ placar.x }}</div>
+    <div>Empates: {{ placar.empate }}</div>
+    <div> O Player 2 O: {{ placar.o }}</div>
+  </div>
+
+  <!-- Tabuleiro -->
+  <div class="grid grid-cols-3 gap-2">
+  <button
+    *ngFor="let cell of board; let i = index"
+    (click)="fazerJogada(i)"
+    class="w-20 h-20 text-2xl font-bold bg-white border border-gray-300 hover:bg-gray-200 transition"
+    [ngClass]="{
+      'text-red-500': cell === 'O',
+      'text-black': cell === 'X'
+    }"
+  >
+    {{ cell }}
+  </button>
+  </div>
+
+  <!-- Botões de Ação -->
+  <div class="flex gap-4">
+    <button
+      (click)="reiniciarJogo()"
+      class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+    >
+      Reiniciar
+    </button>
+
+    <a
+      routerLink="/ranking"
+      class="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition flex items-center justify-center"
+    >
+      Ver Ranking
+    </a>
+  </div>
+
+  <button 
+  class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mt-2"
+  (click)="zerarPlacar()">
+  Zerar Placar
+  </button>
+
+  <!-- Modal de Resultado -->
+  <app-result-modal
+    [mostrar]="gameOver"
+    [mensagem]="mensagemResultado"
+    (aoReiniciar)="reiniciarJogo()"
+  ></app-result-modal>
+</div>
